@@ -21,7 +21,7 @@
 # include <grp.h>
 # include <time.h>
 # include <stdio.h>		//PRINTF A RETIRER
-# include "libtf.h"
+# include "libft.h"
 
 # define RESET "\033[0m"
 # define BOLD "\033[1m"
@@ -84,3 +84,26 @@ typedef struct		s_opt
 	int				dft;
 	int 			end;
 }					t_opt;
+
+char	file_type(struct stat filestat);
+void	get_permission(struct stat filestat, t_info *current);
+t_info	*stock_info(char *av, DIR *dir, struct dirent *dp);
+void	print_simple(t_list *list, t_opt *opt);
+void	print_l(t_list *list, t_opt *opt);
+void	choose_print(t_list *list, t_opt *opt);
+void	choose_prog(char *av, t_opt *opt);
+void	ft_parse(char **av, t_opt *opt);
+void	opt_init(t_opt *opt);
+int		fail_open_directory(char *str);
+int		error(char c);
+int		options(char *av, t_opt *opt);
+int		options2(char *av, t_opt *opt);
+int		options3(char *av, t_opt *opt);
+char	*correct_path(char *s1, char *s2);
+void	ft_putstr_b(char *str);
+void	ft_putnnbr(int max, int info);
+void	ft_putnstr(int max, char *str);
+int		nblen(int len);
+
+
+# endif

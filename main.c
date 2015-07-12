@@ -12,14 +12,13 @@
 
 #include "ft_ls.h"
 
-
-print_simple(t_info *info, t_opt *opt)
+void	print_simple(t_list *list, t_opt *opt)
 {
-	t_list *list;
+	t_info *info;
 
-	list = 
-	while (info != NULL)
+	while (list)
 	{
+		info = (t_info*)list->data;
 		if (info->filename[0] != '.' || opt->a)
 		{
 			if (opt->s)
@@ -32,60 +31,68 @@ print_simple(t_info *info, t_opt *opt)
 								: ft_putstr(info->filename);
 			ft_putstr("\n");
 		}
-		info = info->next;
+		list = list->next;
 	}
 }
 
-
-void choose_print(t_info *info, t_opt *opt)
+void	print_l(t_list *list, t_opt *opt)
 {
-	if (info)
+	(void)opt;
+	(void)list;
+	printf("PLOP LLLLL");
+}
+
+
+void	choose_print(t_list *list, t_opt *opt)
+{
+	if (list)
 	{
 		if (opt->R)
 		{
 			if (opt->l)
-				print_l(info, opt);
+				print_l(list, opt);
 			else
-				print_simple(info, opt);
+				print_simple(list, opt);
 		}
 		else
 		{
 			if (opt->l)
-				print_l(info, opt);
+				print_l(list, opt);
 			else
-				print_simple(info, opt);
+				print_simple(list, opt);
 		}
 	}
 }
 
-void choose_prog(char *av, t_opt *opt)
+void	choose_prog(char *av, t_opt *opt)
 {
 	t_list			*list;
-	t_info			*info;
 	DIR				*dir;
 	struct dirent	*dp;
 
 	if ((dir = opendir(av)) == NULL)
-		return(fail_open_directory(av))
-	info = (t_info*)list->data;
-	while (dp = readdir(dir))
-		info = ft_lst_push(info, stock_info(av, dir, dp));
+	{
+		fail_open_directory(av);
+		return ;
+	}
+	while ((dp = readdir(dir)))
+		list = ft_lst_push(list, stock_info(av, dir, dp));
 	//merge_sort(list);
-	choose_print(info, opt);
+	choose_print(list, opt);
 }
 
-void ft_parse(char **av, t_opt *opt)
+void	ft_parse(char **av, t_opt *opt)
 {
-	if (av)
+	if (*av)
 	{
-		if (av[0] == '-' && !opt->end)
+		if (*av[0] == '-' && !opt->end)
 		{
-			options(av, opt);
+			options(*av, opt);
 		}
 		else
 		{
 			opt->end = 1;
-			choose_prog(av, opt);
+			choose_prog(*av, opt);
 		}
 	}
 	ft_parse(++av, opt);
@@ -111,10 +118,11 @@ void	opt_init(t_opt *opt)
 	opt->v = 0;
 }
 
-int main(int ac, char **av)
+int		main(int ac, char **av)
 {
 	t_opt *opt;
 
+	(void)ac;
 	if ((opt = malloc(sizeof(opt))) == NULL)
 		return (1);
 	opt_init(opt);

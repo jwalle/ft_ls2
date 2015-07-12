@@ -53,17 +53,18 @@ void	get_permission(struct stat filestat, t_info *current)
 	free(str);
 }
 
-t_info	stock_info(char *av, DIR *dir, struct dirent *dp)
+t_info	*stock_info(char *av, DIR *dir, struct dirent *dp)
 {
 	t_info			*new;
 	struct stat		filestat;
-	struct passwd	pwd;
-	struct group	*grp;
+	//struct passwd	pwd;
+	//struct group	*grp;
 
+	(void)dir;
 	if (!(new = malloc(sizeof(t_info))))
 		return (NULL);
 	new->filename =ft_strdup(dp->d_name);
-	lstat(correct_path(str, dp->d_name), &filestat);
+	lstat(correct_path(av, dp->d_name), &filestat);
 	get_permission(filestat, new);
 	new->isdir = S_ISDIR(filestat.st_mode);
 	return (new);

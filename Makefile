@@ -24,8 +24,9 @@ RESET = tput sgr 0
 
 SRC = main.c \
 	stock.c \
-
-
+	file_handling.c \
+	options.c \
+	misc.c \
 
 OBJ = $(SRC:.c=.o)
 

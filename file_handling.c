@@ -12,10 +12,25 @@
 
 #include "ft_ls.h"
 
+char		*correct_path(char *s1, char *s2)
+{
+	char	*str;
+	char 	*tmp;
+
+	if (strcmp(s1, "/dev"))
+	{
+		tmp = ft_strjoin(s1, "/");
+		str = ft_strjoin(tmp,s2);
+		free(tmp);
+		return (str);
+	}
+	return (s1);
+}
+
 int		fail_open_directory(char *str)
 {
 	ft_putstr("ft_ls: cannot access ");
 	ft_putstr(str);
 	ft_putstr(": No such file or directory\n");
-	return (NULL);
+	return (0);
 }
