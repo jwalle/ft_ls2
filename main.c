@@ -35,14 +35,6 @@ void	print_simple(t_list *list, t_opt *opt)
 	}
 }
 
-void	print_l(t_list *list, t_opt *opt)
-{
-	(void)opt;
-	(void)list;
-	printf("PLOP LLLLL");
-}
-
-
 void	choose_print(t_list *list, t_opt *opt)
 {
 	if (list)
@@ -70,32 +62,35 @@ void	choose_prog(char *av, t_opt *opt)
 	DIR				*dir;
 	struct dirent	*dp;
 
+	list = NULL;
 	if ((dir = opendir(av)) == NULL)
 	{
 		fail_open_directory(av);
 		return ;
-	}
+	}	
 	while ((dp = readdir(dir)))
-		list = ft_lst_push(list, stock_info(av, dir, dp));
+		list = ft_lst_push(list, stock_info(av, dir, dp)); // !!!!
+	closedir(dir);
 	//merge_sort(list);
 	choose_print(list, opt);
+	destroy(list);
 }
 
-void	ft_parse(char **av, t_opt *opt)
+void	ft_parse(char *av, t_opt *opt)
 {
-	if (*av)
+	if (av)
 	{
-		if (*av[0] == '-' && !opt->end)
+		if (av[0] == '-' && !opt->end)
 		{
-			options(*av, opt);
+			options(av, opt);
 		}
 		else
 		{
 			opt->end = 1;
-			choose_prog(*av, opt);
+			opt->file = 1;
+			choose_prog(av, opt);
 		}
 	}
-	ft_parse(++av, opt);
 }
 
 void	opt_init(t_opt *opt)
@@ -116,17 +111,25 @@ void	opt_init(t_opt *opt)
 	opt->n = 0;
 	opt->s = 0;
 	opt->v = 0;
+	opt->file = 0;
 }
 
 int		main(int ac, char **av)
 {
-	t_opt *opt;
+	t_opt	*opt;
+	int		i;
 
+	i = 1;
 	(void)ac;
-	if ((opt = malloc(sizeof(opt))) == NULL)
+	if ((opt = malloc(sizeof(t_opt))) == NULL)
 		return (1);
 	opt_init(opt);
-	ft_parse(++av, opt);
+	while (av[i])
+		ft_parse(av[i++], opt);
+	if (opt->file == 0)
+		choose_prog(".", opt);
 	free(opt);
+	while(1)
+	{}
 	return(0);
 }

@@ -27,6 +27,9 @@ SRC = main.c \
 	file_handling.c \
 	options.c \
 	misc.c \
+	destroy.c \
+	get_len.c \
+	print_l.c \
 
 OBJ = $(SRC:.c=.o)
 

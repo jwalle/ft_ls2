@@ -53,19 +53,61 @@ void	get_permission(struct stat filestat, t_info *current)
 	free(str);
 }
 
+t_info	*stock_dup(t_info *new, struct stat fs, struct dirent *dp, char *ph)
+{
+	struct passwd	*pwd;
+	struct group	*grp;
+	ssize_t			r;
+	char			*buf;
+
+	buf = ft_strnew(256);
+	pwd = getpwuid(fs.st_uid);
+	grp = getgrgid(fs.st_gid);
+	new->filename = ft_strdup(dp->d_name);
+	new->uid = ft_strdup(pwd->pw_name);
+	new->gid = ft_strdup(grp->gr_name);
+	get_permission(fs, new);
+	if (new->islink)
+	{
+
+		r = readlink(ph, buf, sizeof(buf) - 1);
+		buf[r] = 0;
+		new->link_path = ft_strdup(buf);
+	}
+	else
+		new->link_path = NULL;
+	free(ph);
+	free(buf);
+	return (new);
+}
+
+void	min_maj(t_info *new)
+{
+	new->major = major(new->device);
+	new->minor = minor(new->device);
+}
+
+
 t_info	*stock_info(char *av, DIR *dir, struct dirent *dp)
 {
 	t_info			*new;
 	struct stat		filestat;
-	//struct passwd	pwd;
-	//struct group	*grp;
+	char			*path;
 
 	(void)dir;
 	if (!(new = malloc(sizeof(t_info))))
 		return (NULL);
-	new->filename =ft_strdup(dp->d_name);
-	lstat(correct_path(av, dp->d_name), &filestat);
-	get_permission(filestat, new);
+	path = correct_path(av, dp->d_name);
+	lstat(path, &filestat);
 	new->isdir = S_ISDIR(filestat.st_mode);
-	return (new);
+	new->size = filestat.st_size;
+	new->bsize = filestat.st_blocks / 2;
+	new->link = filestat.st_nlink;
+	new->uid_nb = filestat.st_uid;
+	new->gid_nb = filestat.st_gid;
+	new->time = filestat.st_mtime;
+	new->device = filestat.st_rdev;
+	new->islink = S_ISLNK(filestat.st_mode);
+	min_maj(new);
+	return (stock_dup(new, filestat, dp, path));
 }

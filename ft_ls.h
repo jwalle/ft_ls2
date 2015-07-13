@@ -83,6 +83,7 @@ typedef struct		s_opt
 	int				v;
 	int				dft;
 	int 			end;
+	int				file;
 }					t_opt;
 
 char	file_type(struct stat filestat);
@@ -92,7 +93,7 @@ void	print_simple(t_list *list, t_opt *opt);
 void	print_l(t_list *list, t_opt *opt);
 void	choose_print(t_list *list, t_opt *opt);
 void	choose_prog(char *av, t_opt *opt);
-void	ft_parse(char **av, t_opt *opt);
+void	ft_parse(char *av, t_opt *opt);
 void	opt_init(t_opt *opt);
 int		fail_open_directory(char *str);
 int		error(char c);
@@ -104,6 +105,12 @@ void	ft_putstr_b(char *str);
 void	ft_putnnbr(int max, int info);
 void	ft_putnstr(int max, char *str);
 int		nblen(int len);
+void	destroy(t_list *list);
+void 	destroy_info(void *data);
+t_len	*get_len(t_list *list, t_opt *opt);
+void	print_l(t_list *list, t_opt *opt);
+
+
 
 
 # endif
