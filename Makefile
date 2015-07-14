@@ -30,6 +30,9 @@ SRC = main.c \
 	destroy.c \
 	get_len.c \
 	print_l.c \
+	print_simple.c \
+	sort.c \
+	sort_st.c \
 
 OBJ = $(SRC:.c=.o)
 

@@ -83,6 +83,7 @@ typedef struct		s_opt
 	int				v;
 	int				dft;
 	int 			end;
+	int				start;
 	int				file;
 }					t_opt;
 
@@ -108,9 +109,14 @@ int		nblen(int len);
 void	destroy(t_list *list);
 void 	destroy_info(void *data);
 t_len	*get_len(t_list *list, t_opt *opt);
-void	print_l(t_list *list, t_opt *opt);
-
-
-
+void	print_folder(char *str);
+void	merge_sort(t_list **ref, t_opt *opt);
+t_list	*merge(t_list *a, t_list *b);
+t_list	*merge_r(t_list *a, t_list *b);
+void	split(t_list *source, t_list **front, t_list **back);
+t_list	*merge_time_r(t_list *a, t_list *b);
+t_list	*merge_time(t_list *a, t_list *b);
+t_list	*merge_size_r(t_list *a, t_list *b);
+t_list	*merge_size(t_list *a, t_list *b);
 
 # endif

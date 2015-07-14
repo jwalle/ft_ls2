@@ -47,3 +47,9 @@ int		nblen(int len)
 	}
 	return (i);
 }
+
+void	print_folder(char *str)
+{
+	ft_putstr(str);
+	ft_putstr(":\n");
+}
