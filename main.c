@@ -45,16 +45,23 @@ void	choose_prog(char *av, t_opt *opt)
 	t_list			*list;
 	DIR				*dir;
 	struct dirent	*dp;
+	struct stat		filestat;
 
 	list = NULL;
-	if ((dir = opendir(av)) == NULL)
+	lstat(av, &filestat);
+	if (!(dir = opendir(av)) && lstat(av, &filestat))
 	{
 		fail_open_directory(av);
 		return ;
-	}	
-	while ((dp = readdir(dir)))
-		list = ft_lst_push(list, stock_info(av, dir, dp));
-	closedir(dir);
+	}
+	if (S_ISDIR(filestat.st_mode))
+	{
+		while ((dp = readdir(dir)))
+			list = ft_lst_push(list, stock_info(av, dir, dp));
+		closedir(dir);
+	}
+	else
+		print_file(av, opt);
 	merge_sort(&list, opt);
 	choose_print(list, opt, av);
 	destroy(list);
@@ -71,8 +78,7 @@ void	ft_parse(char *av, t_opt *opt)
 		else
 		{
 			if (opt->start)
-				ft_putstr("\n");	
-
+				ft_putstr("\n");
 			opt->end = 1;
 			opt->start = 1;
 			opt->file = 1;

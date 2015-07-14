@@ -12,7 +12,6 @@ void	merge_sort(t_list **ref, t_opt *opt)
 	split(head, &a, &b);
 	merge_sort(&a, opt);
 	merge_sort(&b, opt);
-	printf("merge sort : %d\n", opt->r);
 	if (opt->sort == 't')
 		*ref = (opt->r) ? (merge_time_r(a, b)) : (merge_time(a, b));
 	else if (opt->sort == 'S')

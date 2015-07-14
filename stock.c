@@ -33,9 +33,10 @@ char	file_type(struct stat filestat)
 	return (c);
 }
 
-void	get_permission(struct stat filestat, t_info *current)
+char	*get_permission(struct stat filestat)
 {
 	char *str;
+	char *ret;
 
 	str = ft_strnew(11);
 	str[0] = file_type(filestat);
@@ -49,8 +50,11 @@ void	get_permission(struct stat filestat, t_info *current)
 	str[8] = (filestat.st_mode & S_IWOTH) ? 'w' : '-';
 	str[9] = (filestat.st_mode & S_IXOTH) ? 'x' : '-';
 	str[10] = 0;
-	current->perm = ft_strdup(str);
+	// if (current)
+	// 	current->perm = ft_strdup(str);
+	ret = ft_strdup(str);
 	free(str);
+	return (ret);
 }
 
 t_info	*stock_dup(t_info *new, struct stat fs, struct dirent *dp, char *ph)
@@ -66,11 +70,11 @@ t_info	*stock_dup(t_info *new, struct stat fs, struct dirent *dp, char *ph)
 	new->filename = ft_strdup(dp->d_name);
 	new->uid = ft_strdup(pwd->pw_name);
 	new->gid = ft_strdup(grp->gr_name);
-	get_permission(fs, new);
+	new->perm = get_permission(fs);
 	if (new->islink)
 	{
 
-		r = readlink(ph, buf, sizeof(buf) - 1);
+		r = readlink(ph, buf, sizeof(buf));
 		buf[r] = 0;
 		new->link_path = ft_strdup(buf);
 	}
@@ -80,13 +84,6 @@ t_info	*stock_dup(t_info *new, struct stat fs, struct dirent *dp, char *ph)
 	free(buf);
 	return (new);
 }
-
-void	min_maj(t_info *new)
-{
-	new->major = major(new->device);
-	new->minor = minor(new->device);
-}
-
 
 t_info	*stock_info(char *av, DIR *dir, struct dirent *dp)
 {
@@ -108,6 +105,7 @@ t_info	*stock_info(char *av, DIR *dir, struct dirent *dp)
 	new->time = filestat.st_mtime;
 	new->device = filestat.st_rdev;
 	new->islink = S_ISLNK(filestat.st_mode);
-	min_maj(new);
+	new->major = major(new->device);
+	new->minor = minor(new->device);
 	return (stock_dup(new, filestat, dp, path));
 }
