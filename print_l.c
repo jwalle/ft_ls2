@@ -29,7 +29,7 @@ void	print_total(t_list *list, t_opt *opt)
 
 	total = 0;
 	current = NULL;
-	while (current)
+	while (list)
 	{
 		current = (t_info*)list->data;
 		if (current->filename[0] != '.' || opt->a)
@@ -41,6 +41,7 @@ void	print_total(t_list *list, t_opt *opt)
 	ft_putstr("total ");
 	ft_putnbr(total);
 	ft_putchar('\n');
+	printf("%c\n", opt->sort);
 }
 
 void	sub_print_l(t_info	*current, t_opt *opt, t_len *len)

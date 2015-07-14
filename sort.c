@@ -12,6 +12,7 @@ void	merge_sort(t_list **ref, t_opt *opt)
 	split(head, &a, &b);
 	merge_sort(&a, opt);
 	merge_sort(&b, opt);
+	printf("merge sort : %d\n", opt->r);
 	if (opt->sort == 't')
 		*ref = (opt->r) ? (merge_time_r(a, b)) : (merge_time(a, b));
 	else if (opt->sort == 'S')
@@ -32,7 +33,7 @@ t_list	*merge(t_list *a, t_list *b)
 		return (a);
 	info_a = (t_info*)a->data;
 	info_b = (t_info*)b->data;
-	if (ft_strcmp(info_a->filename, info_a->filename) < 0)
+	if (ft_strcmp(info_a->filename, info_b->filename) < 0)
 	{
 		result = a;
 		result->next = merge(a->next, b);
@@ -73,7 +74,7 @@ t_list	*merge_r(t_list *a, t_list *b)
 void	split(t_list *source, t_list **front, t_list **back)
 {
 	t_list	*fast;
-	t_list *slow;
+	t_list	*slow;
 
 	if (!source || !source->next)
 	{

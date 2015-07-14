@@ -33,10 +33,7 @@ int		options(char *av, t_opt *opt)
 		if (av[i] == 'a')
 			opt->a = 1;
 		if (av[i] == 'r')
-		{
 			opt->r = 1;
-			opt->no_r = 0;
-		}
 		i++;
 	}
 	return (options2(av, opt));

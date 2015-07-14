@@ -27,6 +27,9 @@
 # define BOLD "\033[1m"
 # define RED "\x1b[31m"
 # define OPTIONS "l,R,a,r,t,A,d,g,G,i,n,S,v,s,1,-"
+# define DEFAULT 1
+# define SIZE 2
+# define TIME 3
 
 
 typedef	struct		s_len
@@ -62,17 +65,15 @@ typedef struct		s_info
 	int				major;
 	int				minor;
 	t_len			*len;
-	//struct element	*next;
 }					t_info;
 
 typedef struct		s_opt
 {
-	int				sort;
+	char			sort;
 	int				l;
 	int				R;
 	int				a;
 	int				r;
-	int				no_r;
 	int				A;
 	int				d;
 	int				g;
@@ -92,7 +93,7 @@ void	get_permission(struct stat filestat, t_info *current);
 t_info	*stock_info(char *av, DIR *dir, struct dirent *dp);
 void	print_simple(t_list *list, t_opt *opt);
 void	print_l(t_list *list, t_opt *opt);
-void	choose_print(t_list *list, t_opt *opt);
+void	choose_print(t_list *list, t_opt *opt, char *av);
 void	choose_prog(char *av, t_opt *opt);
 void	ft_parse(char *av, t_opt *opt);
 void	opt_init(t_opt *opt);
@@ -118,5 +119,9 @@ t_list	*merge_time_r(t_list *a, t_list *b);
 t_list	*merge_time(t_list *a, t_list *b);
 t_list	*merge_size_r(t_list *a, t_list *b);
 t_list	*merge_size(t_list *a, t_list *b);
+void	print_dev(t_list *list, t_opt *opt);
+void	print_total(t_list *list, t_opt *opt);
+void	ft_print_time(time_t timefile);
+
 
 # endif

@@ -12,11 +12,18 @@
 
 #include "ft_ls.h"
 
-void	choose_print(t_list *list, t_opt *opt)
+void	choose_print(t_list *list, t_opt *opt, char *av)
 {
 	if (list)
 	{
-		if (opt->R)
+		if (ft_strstr(av, "/dev") || ft_strstr(av, "/dev/"))
+		{
+			if (opt->l)
+					print_dev(list, opt);
+			else
+				print_simple(list, opt);
+		}
+		else if (opt->R) 
 		{
 			if (opt->l)
 				print_l(list, opt);
@@ -49,7 +56,7 @@ void	choose_prog(char *av, t_opt *opt)
 		list = ft_lst_push(list, stock_info(av, dir, dp));
 	closedir(dir);
 	merge_sort(&list, opt);
-	choose_print(list, opt);
+	choose_print(list, opt, av);
 	destroy(list);
 }
 
@@ -78,7 +85,6 @@ void	ft_parse(char *av, t_opt *opt)
 void	opt_init(t_opt *opt)
 {
 	opt->sort = 'd';
-	opt->no_r = 0;
 	opt->dft = 0;
 	opt->end = 0;
 	opt->l = 0;
@@ -86,7 +92,7 @@ void	opt_init(t_opt *opt)
 	opt->a = 0;
 	opt->r = 0;
 	opt->A = 0;
-	opt->d = 1;
+	opt->d = 0;
 	opt->g = 0;
 	opt->G = 0;
 	opt->i = 0;

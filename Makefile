@@ -33,6 +33,7 @@ SRC = main.c \
 	print_simple.c \
 	sort.c \
 	sort_st.c \
+	print_dev.c \
 
 OBJ = $(SRC:.c=.o)
 
