@@ -1,0 +1,23 @@
+total 208
+-rw-r--r--    1 jwalle  2014_paris   2052 Jul 14 20:23 Makefile
+-rw-r--r--    1 jwalle  2014_paris      7 Jul 12 13:25 auteur
+-rw-r--r--    1 jwalle  2014_paris    384 Jul 14 18:29 destroy.c
+-rw-r--r--    1 jwalle  2014_paris   1266 Jul 13 17:52 file_handling.c
+-rwxr-xr-x    1 jwalle  2014_paris  29784 Sep 21 14:11 ft_ls
+-rw-r--r--    1 jwalle  2014_paris   3467 Sep 12 17:34 ft_ls.h
+-rw-r--r--    1 jwalle  2014_paris   1435 Jul 13 18:56 get_len.c
+drwxr-xr-x  131 jwalle  2014_paris   4454 Sep 21 14:11 libft
+-rw-r--r--    1 jwalle  2014_paris   2635 Jul 14 20:26 main.c
+-rw-r--r--    1 jwalle  2014_paris    615 Jul 14 20:33 misc.c
+drwxr-xr-x   15 jwalle  2014_paris    510 Sep 21 14:11 objs
+-rw-r--r--    1 jwalle  2014_paris   1243 Jul 14 17:53 options.c
+-rw-r--r--    1 jwalle  2014_paris   1735 Jul 14 16:58 print_dev.c
+-rw-r--r--    1 jwalle  2014_paris   1008 Jul 14 20:29 print_file.c
+-rw-r--r--    1 jwalle  2014_paris   1774 Sep 21 14:11 print_l.c
+-rw-r--r--    1 jwalle  2014_paris    497 Jul 14 15:42 print_simple.c
+-rw-r--r--    1 jwalle  2014_paris    231 Jul 14 18:18 script.sh
+-rw-r--r--    1 jwalle  2014_paris   1655 Jul 14 18:28 sort.c
+-rw-r--r--    1 jwalle  2014_paris   1550 Jul 14 16:34 sort_st.c
+-rw-r--r--    1 jwalle  2014_paris   3224 Jul 14 19:49 stock.c
+-rw-r--r--    1 jwalle  2014_paris      0 Sep 21 14:14 test1.txt
+-rw-r--r--    1 jwalle  2014_paris     36 Jul 14 20:33 todo

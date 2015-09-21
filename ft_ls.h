@@ -84,6 +84,7 @@ typedef struct		s_opt
 	int				file;
 }					t_opt;
 
+void	print_stuff_two(void *ptr, size_t size, time_t time);
 char	file_type(struct stat filestat);
 char	*get_permission(struct stat filestat);
 t_info	*stock_info(char *av, DIR *dir, struct dirent *dp);
@@ -91,7 +92,7 @@ void	print_simple(t_list *list, t_opt *opt);
 void	print_l(t_list *list, t_opt *opt);
 void	choose_print(t_list *list, t_opt *opt, char *av);
 void	choose_prog(char *av, t_opt *opt);
-void	ft_parse(char *av, t_opt *opt);
+int		ft_parse(char *av, t_opt *opt);
 void	opt_init(t_opt *opt);
 int		fail_open_directory(char *str);
 int		error(char c);

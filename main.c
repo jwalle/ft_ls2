@@ -67,24 +67,29 @@ void	choose_prog(char *av, t_opt *opt)
 	destroy(list);
 }
 
-void	ft_parse(char *av, t_opt *opt)
+int		ft_parse(char *av, t_opt *opt)
 {
-	if (av)
+	if (av[0] == '-' && !opt->end)
 	{
-		if (av[0] == '-' && !opt->end)
-		{
-			options(av, opt);
-		}
-		else
-		{
-			if (opt->start)
-				ft_putstr("\n");
-			opt->end = 1;
-			opt->start = 1;
-			opt->file = 1;
+		options(av, opt);
+		return (1);
+	}
+	return (0);
+}
+
+void	ft_parse_two(char **av, t_opt *opt, int j)
+{
+	if (opt->start)
+		ft_putstr("\n");
+	opt->end = 1;
+	opt->start = 1;
+	opt->file = 1;
+	while (av)
+	{
+		if ((ac - i) != 1)
 			print_folder(av);
-			choose_prog(av, opt);
-		}
+		choose_prog(av, opt);
+		av++;
 	}
 }
 
@@ -113,14 +118,17 @@ int		main(int ac, char **av)
 {
 	t_opt	*opt;
 	int		i;
+	int		j;
 
 	i = 1;
+	j = 0;
 	(void)ac;
 	if ((opt = malloc(sizeof(t_opt))) == NULL)
 		return (1);
 	opt_init(opt);
 	while (av[i])
-		ft_parse(av[i++], opt);
+		j += ft_parse(av[i++], opt, ac);
+	ft_parse_two(av + j, opt, j);
 	if (opt->file == 0)
 		choose_prog(".", opt);
 	free(opt);

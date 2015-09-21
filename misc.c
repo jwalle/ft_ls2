@@ -30,9 +30,9 @@ void	ft_putnnbr(int max, int info)
 
 void	ft_putstr_b(char *str)
 {
-	ft_putstr(BOLD);
+	//ft_putstr(BOLD);
 	ft_putstr(str);
-	ft_putstr(RESET);
+	//ft_putstr(RESET);
 }
 
 int		nblen(int len)

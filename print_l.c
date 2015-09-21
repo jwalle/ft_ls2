@@ -39,9 +39,8 @@ void	print_total(t_list *list, t_opt *opt)
 		list = list->next;
 	}
 	ft_putstr("total ");
-	ft_putnbr(total);
+	ft_putnbr(2 * total);
 	ft_putchar('\n');
-	printf("%c\n", opt->sort);
 }
 
 void	sub_print_l(t_info	*current, t_opt *opt, t_len *len)
@@ -54,6 +53,7 @@ void	sub_print_l(t_info	*current, t_opt *opt, t_len *len)
 	if (!opt->g)
 		(!opt->n) ? ft_putnstr(len->uid_len, current->uid) :
 					ft_putnnbr(len->uid_nb_len, current->uid_nb);
+	ft_putchar(' ');
 }
 
 void		print_l(t_list *list, t_opt *opt)
@@ -72,6 +72,7 @@ void		print_l(t_list *list, t_opt *opt)
 			if (!opt->G)
 				(!opt->n) ? ft_putnstr(len->gid_len, current->gid) :
 							ft_putnnbr(len->gid_nb_len, current->gid_nb);
+			ft_putchar(' ');
 			ft_putnnbr(len->size_len, current->size);
 			ft_print_time(current->time);
 			(!current->isdir) ? ft_putstr(current->filename) :

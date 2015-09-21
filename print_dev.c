@@ -38,6 +38,7 @@ void	sub_print_dev(t_info *current, t_opt *opt, t_len *len)
 	if (!opt->g)
 		(!opt->n) ? ft_putdevstr(len->uid_len, current->uid) :
 					ft_putdevnbr(len->uid_nb_len, current->uid_nb);
+	ft_putchar(' ');
 }
 
 void	print_maj_min(t_info *current)

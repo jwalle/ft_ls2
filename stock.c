@@ -6,7 +6,7 @@
 /*   By: jwalle <jwalle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/07/12 16:06:14 by jwalle            #+#    #+#             */
-/*   Updated: 2015/07/12 16:06:17 by jwalle           ###   ########.fr       */
+/*   Updated: 2015/09/21 14:47:34 by jwalle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*get_permission(struct stat filestat)
 	char *str;
 	char *ret;
 
-	str = ft_strnew(11);
+	str = ft_strnew(12);
 	str[0] = file_type(filestat);
 	str[1] = (filestat.st_mode & S_IRUSR) ? 'r' : '-';
 	str[2] = (filestat.st_mode & S_IWUSR) ? 'w' : '-';
@@ -49,7 +49,8 @@ char	*get_permission(struct stat filestat)
 	str[7] = (filestat.st_mode & S_IROTH) ? 'r' : '-';
 	str[8] = (filestat.st_mode & S_IWOTH) ? 'w' : '-';
 	str[9] = (filestat.st_mode & S_IXOTH) ? 'x' : '-';
-	str[10] = 0;
+	str[10] = ' ';
+	str[11] = 0;
 	// if (current)
 	// 	current->perm = ft_strdup(str);
 	ret = ft_strdup(str);
