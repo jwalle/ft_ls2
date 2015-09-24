@@ -134,10 +134,8 @@ int		main(int ac, char **av)
 {
 	t_opt	*opt;
 	int		i;
-	int		j;
 
 	i = 1;
-	j = 0;
 	(void)ac;
 	if ((opt = malloc(sizeof(t_opt))) == NULL)
 		return (1);
@@ -146,11 +144,8 @@ int		main(int ac, char **av)
 		ft_parse(av[i++], opt);
 	if (opt->f_num > 0)
 		ft_print_parse(opt);
-	// ft_parse_two(av + j, opt, j, ac);
 	if (opt->file == 0)
 		choose_prog(".", opt);
 	free(opt);
-	//while(1)
-	//{}
 	return(0);
 }
