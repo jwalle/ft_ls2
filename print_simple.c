@@ -15,7 +15,7 @@ void	print_simple(t_list *list, t_opt *opt)
 				((info->isdir) && opt->a) ? ft_putstr_b(info->filename)
 											: ft_putstr(info->filename);
 			else
-				(info->isdir) ? ft_putstr_b(info->filename)
+				(info->isdir) ? ft_putstr_b	(info->filename)
 								: ft_putstr(info->filename);
 			ft_putstr("\n");
 		}

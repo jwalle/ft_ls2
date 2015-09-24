@@ -72,15 +72,9 @@ int		ft_parse(char *av, t_opt *opt)
 	if (av)
 	{
 		if (av[0] == '-' && !opt->end)
-		{
 			options(av, opt);
-		}
 		else
 			opt->folder[opt->f_num++] = ft_strdup(av);
-		/*else
-		{
-			
-		}*/
 	}
 	return (1);
 }
@@ -103,9 +97,6 @@ void	ft_print_parse(t_opt *opt)
 		i++;
 	}
 }
-
-
-
 
 void	opt_init(t_opt *opt, int ac)
 {
@@ -136,7 +127,6 @@ int		main(int ac, char **av)
 	int		i;
 
 	i = 1;
-	(void)ac;
 	if ((opt = malloc(sizeof(t_opt))) == NULL)
 		return (1);
 	opt_init(opt, ac);
@@ -144,7 +134,7 @@ int		main(int ac, char **av)
 		ft_parse(av[i++], opt);
 	if (opt->f_num > 0)
 		ft_print_parse(opt);
-	if (opt->file == 0)
+	else
 		choose_prog(".", opt);
 	free(opt);
 	return(0);
