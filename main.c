@@ -69,29 +69,26 @@ void	choose_prog(char *av, t_opt *opt)
 
 int		ft_parse(char *av, t_opt *opt)
 {
-	if (av[0] == '-' && !opt->end)
+	if (av)
 	{
-		options(av, opt);
-		return (1);
+		if (av[0] == '-' && !opt->end)
+		{
+			options(av, opt);
+		}
+		else
+		{
+			if (opt->start)
+				ft_putstr("\n");
+			opt->end = 1;
+			opt->start = 1;
+			opt->file = 1;
+			print_folder(av);
+			choose_prog(av, opt);
+		}
 	}
-	return (0);
+	return (1);
 }
 
-void	ft_parse_two(char **av, t_opt *opt, int j)
-{
-	if (opt->start)
-		ft_putstr("\n");
-	opt->end = 1;
-	opt->start = 1;
-	opt->file = 1;
-	while (av)
-	{
-		if ((ac - i) != 1)
-			print_folder(av);
-		choose_prog(av, opt);
-		av++;
-	}
-}
 
 void	opt_init(t_opt *opt)
 {
@@ -127,8 +124,8 @@ int		main(int ac, char **av)
 		return (1);
 	opt_init(opt);
 	while (av[i])
-		j += ft_parse(av[i++], opt, ac);
-	ft_parse_two(av + j, opt, j);
+		ft_parse(av[i++], opt);
+	// ft_parse_two(av + j, opt, j, ac);
 	if (opt->file == 0)
 		choose_prog(".", opt);
 	free(opt);
