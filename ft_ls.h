@@ -65,6 +65,8 @@ typedef struct		s_info
 
 typedef struct		s_opt
 {
+	char			**folder;
+	int				f_num;
 	char			sort;
 	int				l;
 	int				R;
@@ -93,7 +95,7 @@ void	print_l(t_list *list, t_opt *opt);
 void	choose_print(t_list *list, t_opt *opt, char *av);
 void	choose_prog(char *av, t_opt *opt);
 int		ft_parse(char *av, t_opt *opt);
-void	opt_init(t_opt *opt);
+void	opt_init(t_opt *opt, int ac);
 int		fail_open_directory(char *str);
 int		error(char c);
 int		options(char *av, t_opt *opt);
