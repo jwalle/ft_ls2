@@ -24,67 +24,74 @@ int		is_folder(char *folder, char *av)
 	return (0);
 }
 
-void	print_recursive(t_opt *opt, char *folder, char *av)
+void	print_recursive(t_opt *opt)
 {
-	t_list			*list;
+	/*t_list			*list;
 	DIR				*dir;
 	struct dirent	*dp;
-	struct stat		filestat;
+	struct stat		filestat;*/
+	int i;
 
-	list = NULL;
-	
-	else
+	i = 0;
+	// list = NULL;
+	while (opt->folders[i])
+	{
+		printf("FOLDERS = %s\n", opt->folders[i++]);
+	}
+
+/*	else
 		print_file(folder, opt);
 	merge_sort(&list, opt);
 	choose_print(list, opt, folder);
-	destroy(list);
+	destroy(list);*/
 }
 
-/*
-void	single_recursive(t_opt *opt)
-{
 
-}
-*/
-
-void	stock_folders(t_opt *opt, char *av)
+void	stock_folders(t_opt *opt, char *folder,  char *av)
 {
-	static int i = 0;
+	static int	i = -1;
+	struct dirent	*dp;
+	//char		*folder;
+	DIR				*dir;
+	struct stat		filestat;
 
 	if (av)
+	{
 		folder = correct_path(av, folder);
-	lstat(folder, &filestat);
+		printf("%s - %s\n", av , folder);
+	}
 	if (!(dir = opendir(folder)) && lstat(folder, &filestat))
 	{
 		fail_open_directory(folder);
 		return ;
 	}
-	if (S_ISDIR(filestat.st_mode))
+	// if (S_ISDIR(filestat.st_mode))
 	{
 		while ((dp = readdir(dir)))
 		{
-			list = ft_lst_push(list, stock_info(folder, dir, dp));
-			if (ft_strcmp(dp->d_name , ".") && ft_strcmp(dp->d_name, "..")
+			//list = ft_lst_push(list, stock_info(folder, dir, dp));
+			if (dp->d_name[0] != '.' && ft_strcmp(dp->d_name, "..")
 			&& is_folder(dp->d_name, folder))
 			{
-				opt->folders[i++] = ft_strdup(folder);
+				i++;
+				printf("PLOP = %s\n", dp->d_name);
+				opt->folders[i] = ft_strdup(folder);
+				stock_folders(opt, opt->folders[i], NULL);
 			}
-
-
 		}
 		closedir(dir);
 	}		
 }
-
 
 void	parse_recursive(t_opt *opt)
 {
 	int i;
 
 	i = 0;
+	opt->folders = (char **)malloc(10000);
 	if (opt->f_num == 0)
 	{
-		print_recursive(opt, ".", NULL);
+		print_recursive(opt);
 		return ;
 	}
 	while (i < opt->f_num)
@@ -95,8 +102,9 @@ void	parse_recursive(t_opt *opt)
 		opt->start = 1;
 		if (opt->f_num > 1 && i > 1)
 			print_folder(opt->folder[i]);
-		print_recursive(opt, opt->folder[i], NULL);
+		stock_folders(opt, opt->folder[i], NULL);
 		free(opt->folder[i]);
 		i++;
 	}
+	print_recursive(opt);
 }

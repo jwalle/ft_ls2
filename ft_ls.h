@@ -65,6 +65,7 @@ typedef struct		s_info
 
 typedef struct		s_opt
 {
+	char			**folders;
 	char			**folder;
 	int				f_num;
 	char			sort;
