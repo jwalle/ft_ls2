@@ -30,9 +30,27 @@ void	print_recursive(t_opt *opt, char *folder, char *av)
 	DIR				*dir;
 	struct dirent	*dp;
 	struct stat		filestat;
-	// char			*path;
 
 	list = NULL;
+	
+	else
+		print_file(folder, opt);
+	merge_sort(&list, opt);
+	choose_print(list, opt, folder);
+	destroy(list);
+}
+
+/*
+void	single_recursive(t_opt *opt)
+{
+
+}
+*/
+
+void	stock_folders(t_opt *opt, char *av)
+{
+	static int i = 0;
+
 	if (av)
 		folder = correct_path(av, folder);
 	lstat(folder, &filestat);
@@ -46,28 +64,22 @@ void	print_recursive(t_opt *opt, char *folder, char *av)
 		while ((dp = readdir(dir)))
 		{
 			list = ft_lst_push(list, stock_info(folder, dir, dp));
-			if (ft_strcmp(dp->d_name , ".") && ft_strcmp(dp->d_name, "..") && is_folder(dp->d_name, folder))
-				print_recursive(opt, dp->d_name, folder);
+			if (ft_strcmp(dp->d_name , ".") && ft_strcmp(dp->d_name, "..")
+			&& is_folder(dp->d_name, folder))
+			{
+				opt->folders[i++] = ft_strdup(folder);
+			}
+
+
 		}
 		closedir(dir);
-	}
-	else
-		print_file(folder, opt);
-	merge_sort(&list, opt);
-	choose_print(list, opt, folder);
-	destroy(list);	
+	}		
 }
 
-/*
-void	single_recursive(t_opt *opt)
-{
-
-}
-*/
 
 void	parse_recursive(t_opt *opt)
 {
-	static int i;
+	int i;
 
 	i = 0;
 	if (opt->f_num == 0)
@@ -86,6 +98,5 @@ void	parse_recursive(t_opt *opt)
 		print_recursive(opt, opt->folder[i], NULL);
 		free(opt->folder[i]);
 		i++;
-		
 	}
 }

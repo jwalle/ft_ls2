@@ -36,7 +36,6 @@ char	file_type(struct stat filestat)
 char	*get_permission(struct stat filestat)
 {
 	char *str;
-	char *ret;
 
 	str = ft_strnew(12);
 	str[0] = file_type(filestat);
@@ -49,13 +48,9 @@ char	*get_permission(struct stat filestat)
 	str[7] = (filestat.st_mode & S_IROTH) ? 'r' : '-';
 	str[8] = (filestat.st_mode & S_IWOTH) ? 'w' : '-';
 	str[9] = (filestat.st_mode & S_IXOTH) ? 'x' : '-';
-	str[10] = ' ';
+	str[10] = ' '; // @
 	str[11] = 0;
-	// if (current)
-	// 	current->perm = ft_strdup(str);
-	ret = ft_strdup(str);
-	free(str);
-	return (ret);
+	return (str);
 }
 
 t_info	*stock_dup(t_info *new, struct stat fs, struct dirent *dp, char *ph)
