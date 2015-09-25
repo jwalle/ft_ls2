@@ -19,14 +19,7 @@ void	choose_print(t_list *list, t_opt *opt, char *av)
 		if (ft_strstr(av, "/dev") || ft_strstr(av, "/dev/"))
 		{
 			if (opt->l)
-					print_dev(list, opt);
-			else
-				print_simple(list, opt);
-		}
-		else if (opt->R) 
-		{
-			if (opt->l)
-				print_l(list, opt);
+				print_dev(list, opt);
 			else
 				print_simple(list, opt);
 		}
@@ -93,7 +86,8 @@ void	ft_print_parse(t_opt *opt)
 		opt->file = 1;
 		if (opt->f_num > 1)
 			print_folder(opt->folder[i]);
-		choose_prog(opt->folder[i], opt);	
+		choose_prog(opt->folder[i], opt);
+		free(opt->folder[i]);
 		i++;
 	}
 }
@@ -132,7 +126,9 @@ int		main(int ac, char **av)
 	opt_init(opt, ac);
 	while (av[i])
 		ft_parse(av[i++], opt);
-	if (opt->f_num > 0)
+	if (opt->R == 1)
+		parse_recursive(opt);
+	else if (opt->f_num > 0)
 		ft_print_parse(opt);
 	else
 		choose_prog(".", opt);

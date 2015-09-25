@@ -6,7 +6,7 @@
 #    By: jwalle <jwalle@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/07/09 15:06:36 by jwalle            #+#    #+#              #
-#    Updated: 2015/07/12 13:36:15 by jwalle           ###   ########.fr        #
+#    Updated: 2015/09/25 12:21:13 by jwalle           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRC = main.c \
 	sort_st.c \
 	print_dev.c \
 	print_file.c \
+	print_recursive.c \
 
 OBJ = $(SRC:.c=.o)
 
