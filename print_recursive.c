@@ -19,19 +19,23 @@ int		is_folder(char *folder, char *av)
 
 	path = correct_path(av, folder);
 	lstat(path, &filestat);
-	if (S_ISDIR(filestat.st_mode) != 0)
+	if (S_ISDIR(filestat.st_mode))
 		return (1);
 	return (0);
 }
 
-void	print_recursive(t_opt *opt, char *folder)
+void	print_recursive(t_opt *opt, char *folder, char *av)
 {
 	t_list			*list;
 	DIR				*dir;
 	struct dirent	*dp;
 	struct stat		filestat;
+//	char			*path;
 
+	printf("%s\n", folder);
 	list = NULL;
+	if (av)
+		folder = correct_path(av, folder);
 	lstat(folder, &filestat);
 	if (!(dir = opendir(folder)) && lstat(folder, &filestat))
 	{
@@ -42,11 +46,11 @@ void	print_recursive(t_opt *opt, char *folder)
 	{
 		while ((dp = readdir(dir)))
 		{
+			printf("name = %s\n", folder);
 			list = ft_lst_push(list, stock_info(folder, dir, dp));
 			if (is_folder(dp->d_name, folder))
-			print_recursive(opt, dp->d_name);
+				print_recursive(opt, dp->d_name, folder);
 		}
-
 		closedir(dir);
 	}
 	else
@@ -63,14 +67,14 @@ void	single_recursive(t_opt *opt)
 }
 */
 
-void	parse_recursive(t_opt *opt)
+void	parse_recursive(t_opt *opt, av)
 {
 	static int i;
 
 	i = 0;
 	if (opt->f_num == 0)
 	{
-		print_recursive(opt, ".");
+		print_recursive(opt, ".", NULL);
 		return ;
 	}
 	while (i < opt->f_num)
@@ -81,7 +85,7 @@ void	parse_recursive(t_opt *opt)
 		opt->start = 1;
 		if (opt->f_num > 1 && i > 1)
 			print_folder(opt->folder[i]);
-		print_recursive(opt, opt->folder[i]);
+		print_recursive(opt, opt->folder[i], NULL);
 		free(opt->folder[i]);
 		i++;
 		
