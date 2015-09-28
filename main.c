@@ -72,7 +72,10 @@ int		ft_parse(char *av, t_opt *opt)
 		if (av[0] == '-' && !opt->end)
 			options(av, opt);
 		else
+		{
+			printf("PLOP = %c\n", av[ft_strlen(av)]);
 			opt->folder[opt->f_num++] = ft_strdup(av);
+		}
 	}
 	return (1);
 }

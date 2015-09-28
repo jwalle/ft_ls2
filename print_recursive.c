@@ -69,6 +69,8 @@ t_list	*stock_folders(t_opt *opt, char *av, t_list *list_fold)
 {
 	struct dirent	*dp;
 	DIR				*dir;
+	struct stat		filestat;
+	DIR				*dir_two;
 	char			*path;
 
 	dir = opendir(av);
@@ -78,7 +80,8 @@ t_list	*stock_folders(t_opt *opt, char *av, t_list *list_fold)
 		{
 			path = correct_path(av, dp->d_name);
 			list_fold = ft_lst_push(list_fold, stk_lst_fold(path));
-			stock_folders(opt, path, list_fold);
+			if ((dir_two = opendir(path)) && lstat(av, &filestat))
+				stock_folders(opt, path, list_fold);
 		}
 	}
 	closedir(dir);
