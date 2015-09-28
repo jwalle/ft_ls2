@@ -64,6 +64,7 @@ t_info	*stock_dup(t_info *new, struct stat fs, struct dirent *dp, char *ph)
 	pwd = getpwuid(fs.st_uid);
 	grp = getgrgid(fs.st_gid);
 	new->filename = ft_strdup(dp->d_name);
+	//if (pwd->pw_name)
 	new->uid = ft_strdup(pwd->pw_name);
 	new->gid = ft_strdup(grp->gr_name);
 	new->perm = get_permission(fs);
