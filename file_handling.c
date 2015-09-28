@@ -12,6 +12,19 @@
 
 #include "ft_ls.h"
 
+int			as_right(char *av)
+{
+	struct stat	filestat;
+	DIR			*dir;
+
+	if (lstat(av, &filestat) || (dir = opendir(av)) == NULL) 
+	{
+		return (0);
+	}
+	closedir(dir);
+	return (1);
+}
+
 char		*correct_path(char *s1, char *s2)
 {
 	char	*str;

@@ -33,6 +33,13 @@ void	choose_print(t_list *list, t_opt *opt, char *av)
 	}
 }
 
+void	print_noright(char *av)
+{
+	ft_putstr("ft_ls: ");
+	ft_putstr(av);
+	ft_putstr(": Permission denied\n");
+}
+
 void	choose_prog(char *av, t_opt *opt)
 {
 	t_list			*list;
@@ -41,10 +48,9 @@ void	choose_prog(char *av, t_opt *opt)
 	struct stat		filestat;
 
 	list = NULL;
-	printf("%s\n", av);
-	if (lstat(av, &filestat) == -1)
+	if (!as_right(av))
 	{
-		printf("GTFO\n");
+		print_noright(av);
 		return ;
 	}
 	if (!(dir = opendir(av)) && lstat(av, &filestat))
@@ -78,7 +84,6 @@ int		ft_parse(char *av, t_opt *opt)
 			options(av, opt);
 		else
 		{
-			// printf("PLOP = %c\n", av[ft_strlen(av)]);
 			opt->folder[opt->f_num++] = ft_strdup(av);
 		}
 	}

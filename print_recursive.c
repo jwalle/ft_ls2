@@ -40,14 +40,19 @@ void	print_recursive(t_opt *opt, t_list *list_fold)
 		if (i > 0)
 			ft_putstr("\n");
 		print_folder(current->folder);
-		dir = opendir(current->folder);
-		while ((dp = readdir(dir)))
-			list = ft_lst_push(list, stock_info(current->folder, dir, dp));
-		closedir(dir);
-		merge_sort(&list, opt);
-		choose_print(list, opt, current->folder);
-		destroy(list);
-		list = NULL;
+		if (!as_right(current->folder))
+			print_noright(current->folder);
+		else
+		{
+			dir = opendir(current->folder);
+			while ((dp = readdir(dir)))
+				list = ft_lst_push(list, stock_info(current->folder, dir, dp));
+			closedir(dir);
+			merge_sort(&list, opt);
+			choose_print(list, opt, current->folder);
+			destroy(list);
+			list = NULL;
+		}
 		list_fold = list_fold->next;
 		i++;
 	}
@@ -64,15 +69,15 @@ t_folders	*stk_lst_fold(char *path)
 	return(new);
 }
 
-
 t_list	*stock_folders(t_opt *opt, char *av, t_list *list_fold)
 {
 	struct dirent	*dp;
 	DIR				*dir;
-	struct stat		filestat;
-	DIR				*dir_two;
+	// struct stat		filestat;
 	char			*path;
 
+	if (!as_right(av))
+		return (NULL);
 	dir = opendir(av);
 	while ((dp = readdir(dir)))
 	{
@@ -80,8 +85,7 @@ t_list	*stock_folders(t_opt *opt, char *av, t_list *list_fold)
 		{
 			path = correct_path(av, dp->d_name);
 			list_fold = ft_lst_push(list_fold, stk_lst_fold(path));
-			if ((dir_two = opendir(path)) && lstat(av, &filestat))
-				stock_folders(opt, path, list_fold);
+			stock_folders(opt, path, list_fold);
 		}
 	}
 	closedir(dir);
