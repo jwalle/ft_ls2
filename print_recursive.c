@@ -24,74 +24,91 @@ int		is_folder(char *folder, char *av)
 	return (0);
 }
 
-void	print_recursive(t_opt *opt)
+void	destroy_folders(t_opt *opt)
 {
-	/*t_list			*list;
-	DIR				*dir;
-	struct dirent	*dp;
-	struct stat		filestat;*/
 	int i;
 
 	i = 0;
-	// list = NULL;
 	while (opt->folders[i])
 	{
-		printf("FOLDERS = %s\n", opt->folders[i++]);
+		free(opt->folders[i]);
+		i++;
 	}
+	free(opt->folders);
+}
 
-/*	else
-		print_file(folder, opt);
-	merge_sort(&list, opt);
-	choose_print(list, opt, folder);
-	destroy(list);*/
+void	print_recursive(t_opt *opt, t_list *list_fold)
+{
+	int 			i;
+	DIR				*dir;
+	struct dirent	*dp;
+	t_list			*list;
+	t_folders		*current;
+
+	i = 0;
+	list = NULL;
+	while (list_fold)
+	{
+		printf("sdsfdafbvd\n");
+		current = (t_folders *)list_fold->data;
+		if (i > 0)
+			ft_putstr("\n");
+		printf("FOLDDD = %s\n", current->folder);
+		print_folder(current->folder);
+		dir = opendir(current->folder);
+		while ((dp = readdir(dir)))
+			list = ft_lst_push(list, stock_info(current->folder, dir, dp));
+		closedir(dir);
+		merge_sort(&list, opt);
+		choose_print(list, opt, current->folder);
+		destroy(list);
+		list = NULL;
+		list_fold = list_fold->next;
+		i++;
+	}
+	//destroy_folders(opt);
+}
+
+t_folders	*stk_lst_fold(char *path)
+{
+	t_folders	*new;
+
+	if (!(new = malloc(sizeof(t_folders))))
+		return (NULL);
+	new->folder = ft_strdup(path);
+	return(new);
 }
 
 
-void	stock_folders(t_opt *opt, char *folder,  char *av)
+void	stock_folders(t_opt *opt, char *av, t_list *list_fold)
 {
-	static int	i = -1;
 	struct dirent	*dp;
-	//char		*folder;
 	DIR				*dir;
-	struct stat		filestat;
+	char			*path;
 
-	if (av)
+	dir = opendir(av);
+	while ((dp = readdir(dir)))
 	{
-		folder = correct_path(av, folder);
-		printf("%s - %s\n", av , folder);
-	}
-	if (!(dir = opendir(folder)) && lstat(folder, &filestat))
-	{
-		fail_open_directory(folder);
-		return ;
-	}
-	// if (S_ISDIR(filestat.st_mode))
-	{
-		while ((dp = readdir(dir)))
+		if (dp->d_name[0] != '.' && ft_strcmp(dp->d_name, "..") && is_folder(dp->d_name, av))
 		{
-			//list = ft_lst_push(list, stock_info(folder, dir, dp));
-			if (dp->d_name[0] != '.' && ft_strcmp(dp->d_name, "..")
-			&& is_folder(dp->d_name, folder))
-			{
-				i++;
-				printf("PLOP = %s\n", dp->d_name);
-				opt->folders[i] = ft_strdup(folder);
-				stock_folders(opt, opt->folders[i], NULL);
-			}
+			path = correct_path(av, dp->d_name);
+			list_fold = ft_lst_push(list_fold, stk_lst_fold(path));
+			stock_folders(opt, path, list_fold);
 		}
-		closedir(dir);
-	}		
+	}
+	closedir(dir);
 }
 
 void	parse_recursive(t_opt *opt)
 {
-	int i;
+	int			i;
+	t_list	*list_fold;
 
 	i = 0;
-	opt->folders = (char **)malloc(10000);
+	list_fold = NULL;
 	if (opt->f_num == 0)
 	{
-		print_recursive(opt);
+		print_recursive(opt, list_fold);
 		return ;
 	}
 	while (i < opt->f_num)
@@ -102,9 +119,9 @@ void	parse_recursive(t_opt *opt)
 		opt->start = 1;
 		if (opt->f_num > 1 && i > 1)
 			print_folder(opt->folder[i]);
-		stock_folders(opt, opt->folder[i], NULL);
+		stock_folders(opt, opt->folder[i], list_fold);
 		free(opt->folder[i]);
 		i++;
 	}
-	print_recursive(opt);
+	print_recursive(opt, list_fold);
 }

@@ -54,7 +54,12 @@ void	choose_prog(char *av, t_opt *opt)
 		closedir(dir);
 	}
 	else
-		print_file(av, opt);
+	{
+		if (opt->l)
+			print_file(av, opt);
+		else
+			ft_putendl(av);
+	}
 	merge_sort(&list, opt);
 	choose_print(list, opt, av);
 	destroy(list);

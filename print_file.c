@@ -16,7 +16,7 @@ void	sub_print_file(struct stat filestat, t_opt *opt)
 	if (!opt->g)
 		(!opt->n) ? ft_putstr(pwd->pw_name) :
 					ft_putnbr(filestat.st_uid);
-					ft_putstr(" ");
+	ft_putstr("  ");
 	free(perm);
 }
 
@@ -34,7 +34,9 @@ void		print_file(char *av, t_opt *opt)
 	if (!opt->G)
 		(!opt->n) ? ft_putstr(grp->gr_name) :
 					ft_putnbr(filestat.st_gid);
+	ft_putstr("  ");
 	ft_putnbr(filestat.st_size);
+	ft_putchar(' ');
 	ft_print_time(filestat.st_mtime);
 	ft_putstr(av);
 	if (S_ISLNK(filestat.st_mode))

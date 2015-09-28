@@ -42,6 +42,11 @@ typedef	struct		s_len
 	int				min_len;
 }					t_len;
 
+typedef	struct		s_folders
+{
+	char			*folder;
+}					t_folders;
+
 typedef struct		s_info
 {
 	char			*filename;
