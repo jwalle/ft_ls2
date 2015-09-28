@@ -23,3 +23,22 @@ void destroy(t_list *list)
 		ft_lst_rec_free(list);
 	}
 }
+
+void	destroy_folders_two(void *data)
+{
+	t_folders	*current;
+
+	current = (t_folders*)data;
+	ft_strdel(&current->folder);
+	free(data);
+	data = NULL;
+}
+
+void	destroy_folders(t_list *list_fold)
+{
+	if (list_fold)
+	{
+		ft_lst_foreach(list_fold, destroy_folders_two);
+		ft_lst_rec_free(list_fold);
+	}
+}

@@ -129,6 +129,7 @@ void	print_total(t_list *list, t_opt *opt);
 void	ft_print_time(time_t timefile);
 void	print_file(char *av, t_opt *opt);
 void	parse_recursive(t_opt *opt);
+void	destroy_folders(t_list *list_fold);
 
 
 # endif

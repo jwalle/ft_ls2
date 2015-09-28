@@ -24,19 +24,6 @@ int		is_folder(char *folder, char *av)
 	return (0);
 }
 
-void	destroy_folders(t_opt *opt)
-{
-	int i;
-
-	i = 0;
-	while (opt->folders[i])
-	{
-		free(opt->folders[i]);
-		i++;
-	}
-	free(opt->folders);
-}
-
 void	print_recursive(t_opt *opt, t_list *list_fold)
 {
 	int 			i;
@@ -49,11 +36,9 @@ void	print_recursive(t_opt *opt, t_list *list_fold)
 	list = NULL;
 	while (list_fold)
 	{
-		printf("sdsfdafbvd\n");
 		current = (t_folders *)list_fold->data;
 		if (i > 0)
 			ft_putstr("\n");
-		printf("FOLDDD = %s\n", current->folder);
 		print_folder(current->folder);
 		dir = opendir(current->folder);
 		while ((dp = readdir(dir)))
@@ -66,7 +51,7 @@ void	print_recursive(t_opt *opt, t_list *list_fold)
 		list_fold = list_fold->next;
 		i++;
 	}
-	//destroy_folders(opt);
+	destroy_folders(list_fold);
 }
 
 t_folders	*stk_lst_fold(char *path)
@@ -80,7 +65,7 @@ t_folders	*stk_lst_fold(char *path)
 }
 
 
-void	stock_folders(t_opt *opt, char *av, t_list *list_fold)
+t_list	*stock_folders(t_opt *opt, char *av, t_list *list_fold)
 {
 	struct dirent	*dp;
 	DIR				*dir;
@@ -97,6 +82,7 @@ void	stock_folders(t_opt *opt, char *av, t_list *list_fold)
 		}
 	}
 	closedir(dir);
+	return(list_fold);
 }
 
 void	parse_recursive(t_opt *opt)
@@ -119,7 +105,8 @@ void	parse_recursive(t_opt *opt)
 		opt->start = 1;
 		if (opt->f_num > 1 && i > 1)
 			print_folder(opt->folder[i]);
-		stock_folders(opt, opt->folder[i], list_fold);
+		list_fold = ft_lst_push(list_fold, stk_lst_fold(opt->folder[i]));
+		list_fold = stock_folders(opt, opt->folder[i], list_fold);
 		free(opt->folder[i]);
 		i++;
 	}
