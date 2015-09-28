@@ -41,7 +41,12 @@ void	choose_prog(char *av, t_opt *opt)
 	struct stat		filestat;
 
 	list = NULL;
-	lstat(av, &filestat);
+	printf("%s\n", av);
+	if (lstat(av, &filestat) == -1)
+	{
+		printf("GTFO\n");
+		return ;
+	}
 	if (!(dir = opendir(av)) && lstat(av, &filestat))
 	{
 		fail_open_directory(av);
@@ -73,7 +78,7 @@ int		ft_parse(char *av, t_opt *opt)
 			options(av, opt);
 		else
 		{
-			printf("PLOP = %c\n", av[ft_strlen(av)]);
+			// printf("PLOP = %c\n", av[ft_strlen(av)]);
 			opt->folder[opt->f_num++] = ft_strdup(av);
 		}
 	}
