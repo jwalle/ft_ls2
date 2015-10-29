@@ -70,8 +70,8 @@ t_info	*stock_dup(t_info *new, struct stat fs, struct dirent *dp, char *ph)
 	new->perm = get_permission(fs);
 	if (new->islink)
 	{
-
-		r = readlink(ph, buf, sizeof(buf));
+		r = readlink(ph, buf, 256);
+		printf("buf = %s\n", buf);
 		buf[r] = 0;
 		new->link_path = ft_strdup(buf);
 	}
