@@ -48,7 +48,7 @@ void	choose_prog(char *av, t_opt *opt)
 	struct stat		filestat;
 
 	list = NULL;
-	if (!as_right(av))
+	if (!as_right(av) && !lstat(av, &filestat))
 	{
 		print_noright(av);
 		return ;
