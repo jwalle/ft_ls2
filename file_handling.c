@@ -45,5 +45,6 @@ int		fail_open_directory(char *str)
 	ft_putstr("ft_ls: cannot access ");
 	ft_putstr(str);
 	ft_putstr(": No such file or directory\n");
+	exit (0);
 	return (0);
 }

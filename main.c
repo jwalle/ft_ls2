@@ -81,6 +81,8 @@ int		ft_parse(char *av, t_opt *opt)
 {
 	if (av)
 	{
+		if (av[0] == '-' && !av[1])
+			return(fail_open_directory("-"));
 		if (av[0] == '-' && !opt->end)
 			options(av, opt);
 		else
