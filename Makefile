@@ -12,7 +12,7 @@
 
 NAME = ft_ls
 CFLAGS = -Wall -Werror -Wextra -g
-CC = GCC
+CC = clang
 SRCDIR = .
 ODIR = ./objs/
 LIB = ./libft/libft.a

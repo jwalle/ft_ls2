@@ -58,6 +58,7 @@ void	choose_prog(char *av, t_opt *opt)
 		fail_open_directory(av);
 		return ;
 	}
+	lstat(av, &filestat);
 	if (S_ISDIR(filestat.st_mode))
 	{
 		while ((dp = readdir(dir)))
