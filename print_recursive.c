@@ -37,13 +37,13 @@ void	print_recursive(t_opt *opt, t_list *list_fold)
 	while (list_fold)
 	{
 		current = (t_folders *)list_fold->data;
-		if (i > 0)
+		if (i++ > 0)
 			ft_putstr("\n");
-		print_folder(current->folder);
 		if (!as_right(current->folder))
 			print_noright(current->folder);
 		else
 		{
+			print_folder(current->folder);
 			dir = opendir(current->folder);
 			while ((dp = readdir(dir)))
 				list = ft_lst_push(list, stock_info(current->folder, dir, dp));
@@ -54,7 +54,6 @@ void	print_recursive(t_opt *opt, t_list *list_fold)
 			list = NULL;
 		}
 		list_fold = list_fold->next;
-		i++;
 	}
 	destroy_folders(list_fold);
 }
@@ -101,6 +100,8 @@ void	parse_recursive(t_opt *opt)
 	list_fold = NULL;
 	if (opt->f_num == 0)
 	{
+		list_fold = ft_lst_push(list_fold, stk_lst_fold("."));
+		list_fold = stock_folders(opt, ".", list_fold);
 		print_recursive(opt, list_fold);
 		return ;
 	}
