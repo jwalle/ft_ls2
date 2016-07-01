@@ -6,7 +6,7 @@
 /*   By: jwalle <jwalle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/07/12 16:06:14 by jwalle            #+#    #+#             */
-/*   Updated: 2015/09/21 14:47:34 by jwalle           ###   ########.fr       */
+/*   Updated: 2016/06/30 15:28:11 by jwalle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_info	*stock_dup(t_info *new, struct stat fs, struct dirent *dp, char *ph)
 	if (new->islink)
 	{
 		r = readlink(ph, buf, 256);
-		printf("buf = %s\n", buf);
+	//	printf("buf = %s\n", buf);
 		buf[r] = 0;
 		new->link_path = ft_strdup(buf);
 	}
