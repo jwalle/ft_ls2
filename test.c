@@ -6,7 +6,7 @@
 /*   By: jwalle <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 15:07:08 by jwalle            #+#    #+#             */
-/*   Updated: 2016/07/01 15:38:44 by jwalle           ###   ########.fr       */
+/*   Updated: 2016/07/01 16:57:05 by jwalle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,20 @@ int main(int ac, char **av)
 	char *ft_ls;
 	cmd = av[1];
 
-	ls = strdup("ls ");
-	ft_ls = strdup("./ft_ls ");
-	realloc(ls, sizeof(char) * (4 + strlen(cmd)));
-	realloc(ft_ls, sizeof(char) * (9 + strlen(cmd)));
+	ls = calloc(100, 100);
+	ft_ls = calloc(100, 100);
+	ls = strcpy(ls, "ls ");
+	ft_ls = strcpy(ft_ls, "./ft_ls ");
+	//ft_ls = strdup("./ft_ls ");
+	//realloc(ls, sizeof(char) * 100);
+	//realloc(ft_ls, sizeof(char) * 100);
 	strcat(ls, cmd);
 	strcat(ft_ls, cmd);
+	strcat(ls, " > t1.txt");
+	strcat(ft_ls," > t2.txt");
 	system(ls);
-	puts("	==========================================");
 	system(ft_ls);
+	system("diff t1.txt t2.txt");
+	puts("	==========================================");
 	return (0);
 }
