@@ -22,6 +22,7 @@
 # include <time.h>
 # include <stdio.h>		//PRINTF A RETIRER
 # include "libft.h"
+# include "ft_printf.h"
 
 # define RESET "\033[0m"
 # define BOLD "\033[1m"

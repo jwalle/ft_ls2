@@ -38,9 +38,10 @@ void	print_total(t_list *list, t_opt *opt)
 		}
 		list = list->next;
 	}
-	ft_putstr("total ");
-	ft_putnbr(2 * total);
-	ft_putchar('\n');
+	ft_printf("total %d\n", 2 * total);
+	// ft_putstr("total ");
+	// ft_putnbr(2 * total);
+	// ft_putchar('\n');
 }
 
 void	sub_print_l(t_info	*current, t_opt *opt, t_len *len)

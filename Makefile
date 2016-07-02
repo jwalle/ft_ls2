@@ -13,10 +13,10 @@
 NAME = ft_ls
 CFLAGS = -Wall -Werror -Wextra -g
 CC = clang
-SRCDIR = .
+SRCDIR = ./srcs/
 ODIR = ./objs/
-LIB = ./libft/libft.a
-SRCO = $(SRC:.c=.o)
+INC = -I./inc -I./libft -I./ft_printf/includes/
+LINK = -L./libft -lft -L./ft_printf -lftprintf
 BLU = tput setaf 4
 GRN = tput setaf 2
 WHT = tput setaf 7
@@ -37,32 +37,42 @@ SRC = main.c \
 	print_file.c \
 	print_recursive.c \
 
-OBJ = $(SRC:.c=.o)
 
-all : $(LIB) $(NAME)
+OBJ		=	$(SRC:.c=.o)
+OBJS	= 	$(addprefix $(ODIR), $(OBJ))
 
-$(NAME) : objects
+all :	$(LIB) $(NAME)
+
+$(NAME) : $(OBJS)
 	@$(BLU)
+	mkdir -p $(ODIR)
+	make -C libft
+	make -C ft_printf
 	@echo "Making $(NAME)..."
-	@$(CC) $(addprefix $(ODIR), $(OBJ)) -o $(NAME) -L libft -lft
+	@$(CC)  -o $(NAME) $^ $(LINK)
 	@$(GRN)
 	@echo "Done !"
 	@$(RESET)
 
-objects:
+$(ODIR)%.o : $(SRCDIR)%.c
 	@$(BLU)
 	@echo "making objects..."
-	@$(CC) $(CFLAGS) -c $(SRC) -I ./includes -I libft/includes
-	@mkdir -p $(ODIR)
-	@mv $(OBJ) $(ODIR)
+	mkdir -p $(ODIR)
+	@$(CC) $(CFLAGS) -c $^ $(INC) -o $@
 	@$(GRN)
 	@echo "Done !"
 	@$(RESET)
+
 
 $(LIB):
 	@$(BLU)
 	@echo "Compiling libft..."
 	@make -C libft
+	@$(GRN)
+	@echo "Done !"
+	@$(BLU)
+	@echo "Compiling printf..."
+	make -C ft_printf
 	@$(GRN)
 	@echo "Done !"
 	@$(RESET)
